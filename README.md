@@ -204,7 +204,7 @@ const client = new Twitter({
 const parameters = {
   track: "#bitcoin,#litecoin,#monero",
   follow: "422297024,873788249839370240",  // @OrchardAI, @tylerbuchea
-  locations: "-122.75,36.8,-121.75,37.8",  // Bounding box -	San Francisco
+  locations: "-122.75,36.8,-121.75,37.8",  // Bounding box -  San Francisco
 };
 
 const stream = client.stream("statuses/filter", parameters)
@@ -319,6 +319,15 @@ See the [OAuth example](#oauth-authentication).
 You can find many more examples for various resources/endpoints in [the tests](test).
 
 ## Troubleshooting
+
+### Headers on success
+
+```es6
+const tweets = await client.get("statuses/home_timeline");
+console.log(`Rate: ${tweets._headers.get('x-rate-limit-remaining')} / ${tweets._headers.get('x-rate-limit-limit')}`);
+const delta = (tweets._headers.get('x-rate-limit-reset') * 1000) - Date.now()
+console.log(`Reset: ${Math.ceil(delta / 1000 / 60)} minutes`);
+```
 
 ### API errors
 
